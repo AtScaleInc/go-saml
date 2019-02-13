@@ -1,0 +1,9 @@
+package: github.com/AtScaleInc/go-saml
+import:
+- package: github.com/kardianos/osext
+- package: github.com/nu7hatch/gouuid
+testImport:
+- package: github.com/stretchr/testify
+  version: v1.3.0
+  subpackages:
+  - assert

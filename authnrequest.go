@@ -21,7 +21,7 @@ import (
 	"net/url"
 	"time"
 
-	"github.com/RobotsAndPencils/go-saml/util"
+	"github.com/AtScaleInc/go-saml/util"
 )
 
 func ParseCompressedEncodedRequest(b64RequestXML string) (*AuthnRequest, error) {
@@ -80,18 +80,18 @@ func (r *AuthnRequest) Validate(publicCertPath string) error {
 	return nil
 }
 
-// GetSignedAuthnRequest returns a singed XML document that represents a AuthnRequest SAML document
+// GetSignedAuthnRequest returns a signed XML document that represents a AuthnRequest SAML document
 func (s *ServiceProviderSettings) GetAuthnRequest() *AuthnRequest {
 	r := NewAuthnRequest()
 	r.AssertionConsumerServiceURL = s.AssertionConsumerServiceURL
-	r.Destination = s.IDPSSOURL
-	r.Issuer.Url = s.IDPSSODescriptorURL
+	r.Destination = s.IDPSSOURL // 
+	r.Issuer.Url = s.IDPSSODescriptorURL // this seems wrong -- the issuer of the authentication request should be the the SP's url 
 	r.Signature.KeyInfo.X509Data.X509Certificate.Cert = s.PublicCert()
 
 	if !s.SPSignRequest {
 		r.SAMLSIG = ""
 		r.Signature = nil
-	}
+	}x
 
 	return r
 }
